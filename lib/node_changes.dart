@@ -9,8 +9,9 @@ class NodeChanges {
     // Check each entry in local list to see if it appears in remote list
     // remove anything not in remote
     List<DocumentNode> nodesToRemove = [];
+    var remoteIds = remoteNodes.map((e) => e.id);
     for (var node in localNodes) {
-      if (!remoteNodes.map((e) => e.id).contains(node.id)) {
+      if (!remoteIds.contains(node.id)) {
         nodesToRemove.add(node);
       }
     }
@@ -21,8 +22,9 @@ class NodeChanges {
 
     // Check each entry in remote list to see if it appears in local list
     // add anything not in local
+    var localIds = localNodes.map((e) => e.id);
     for (int i = 0; i < remoteNodes.length; i++) {
-      if (!localNodes.map((e) => e.id).contains(remoteNodes[i].id)) {
+      if (!localIds.contains(remoteNodes[i].id)) {
         var insertedNode = remoteNodes[i].deepCopy();
         if (i < localNodes.length) {
           localNodes.insert(i, insertedNode);
